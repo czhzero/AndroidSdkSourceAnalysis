@@ -14,7 +14,7 @@ LocalBroadcastManager是Android v4兼容包提供的应用内广播发送与接�
 
 ###2.1 自定义 BroadcastReceiver 子类
 
-```
+```java
 public class LocalBroadcastReceiver extends BroadcastReceiver {
 
     @Override
@@ -26,7 +26,7 @@ public class LocalBroadcastReceiver extends BroadcastReceiver {
 
 ###2.2 注册广播
 
-```
+```java
 LocalBroadcastReceiver localReceiver = new LocalBroadcastReceiver();  
 IntentFilter filter = new IntentFilter(ACTION_LOCAL_SEND);
 LocalBroadcastManager.getInstance(context).registerReceiver(localReceiver, filter);  
@@ -34,14 +34,14 @@ LocalBroadcastManager.getInstance(context).registerReceiver(localReceiver, filte
 
 ###2.3 发送广播
 
-```
+```java
 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(ACTION_LOCAL_SEND));  
 ```
 
 
 ###2.4 取消广播注册
 
-```
+```java
 LocalBroadcastManager.getInstance(context).unregisterReceiver(localReceiver); 
 ```
 
@@ -64,7 +64,7 @@ LocalBroadcastManager核心代码为以下四个函数。
 ###3.2 LocalBroadcastManager基本数据结构
 
 
-```
+```java
  //注册广播Record类
  private static class ReceiverRecord {
         final IntentFilter filter;
@@ -105,7 +105,7 @@ private static class BroadcastRecord {
 
 ###3.3  注册广播
 
-```
+```java
 /**
  * Register a receive for any local broadcasts that match the given IntentFilter.
  *
@@ -138,7 +138,7 @@ public void registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
 
 ###3.4  取消广播注册
 
-```
+```java
 /**
  * Unregister a previously registered BroadcastReceiver.  All
  * filters that have been registered for this BroadcastReceiver will be
@@ -179,7 +179,7 @@ public void unregisterReceiver(BroadcastReceiver receiver) {
 
 ###3.5  通过Handler发送广播
 
-```
+```java
 /**
  * Broadcast the given intent to all interested BroadcastReceivers.  This
  * call is asynchronous; it returns immediately, and you will continue
@@ -255,7 +255,7 @@ public boolean sendBroadcast(Intent intent) {
 
 ###3.6  Handler接受和消费广播
 
-```
+```java
 private void executePendingBroadcasts() {
     while (true) {
         BroadcastRecord[] brs = null;
@@ -282,4 +282,3 @@ private void executePendingBroadcasts() {
 ##4.总结
 
 LocalBroadcastManager在应用内使用起来比较简单高效，但是其也是有一些缺点的。比如LocalBroadcastManager并不支持静态注册广播，也不支持有序广播的一些功能。不过如果仅仅是普通广播通信也是够用了。
-
